@@ -5,8 +5,8 @@ $(document).ready(function() {
   var gastosSalvos = localStorage.getItem('gastos');
   if (gastosSalvos) {
     $('#gastosList').html(gastosSalvos);
-    totalGastos = parseFloat(localStorage.getItem('totalGastos'));
-    var media = parseFloat(localStorage.getItem('media'));
+    totalGastos = parseFloat(localStorage.getItem('totalGastos')) || 0;
+    var media = parseFloat(localStorage.getItem('media')) || 0;
     $('#totalGastos').text(totalGastos.toFixed(2));
     $('#mediaTotal').text(media.toFixed(2));
   }
@@ -31,7 +31,7 @@ $(document).ready(function() {
     }
 
     // Adicionar o valor inserido à lista de gastos
-    var gastoItem = '<li class="list-group-item">' + mes + ': R$ ' + gastos.toFixed(2) + ' <button class="btn btn-link btn-excluir">Excluir</button></li>';
+    var gastoItem = '<li class="list-group-item" data-gastos="' + gastos + '">' + mes + ': R$ ' + gastos.toFixed(2) + ' <button class="btn btn-link btn-excluir">Excluir</button></li>';
     $('#gastosList').append(gastoItem);
 
     // Somar o valor inserido ao total dos gastos
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
     // Calcular a média mensal
     var numGastos = $('#gastosList li').length;
-    var media = totalGastos / numGastos;
+    var media = numGastos > 0 ? totalGastos / numGastos : 0;
 
     // Atualizar o valor da soma dos gastos e média na página
     $('#totalGastos').text(totalGastos.toFixed(2));
@@ -58,15 +58,28 @@ $(document).ready(function() {
   // Adicionar evento de clique aos botões de excluir gasto
   $('#gastosList').on('click', '.btn-excluir', function() {
     var gastoItem = $(this).parent();
-    var gastos = parseFloat(gastoItem.text().split(':')[1].trim());
+    var gastos = parseFloat(gastoItem.data('gastos'));
     totalGastos -= gastos;
     var numGastos = $('#gastosList li').length - 1;
-    var media = totalGastos / numGastos;
+    var media = numGastos > 0 ? totalGastos / numGastos : 0;
     gastoItem.remove();
     $('#totalGastos').text(totalGastos.toFixed(2));
     $('#mediaTotal').text(media.toFixed(2));
     localStorage.setItem('gastos', $('#gastosList').html());
     localStorage.setItem('totalGastos', totalGastos);
     localStorage.setItem('media', media);
+  });
+
+  // Filtrar a lista de gastos com base no texto digitado
+  $('#search').on('input', function() {
+    var textoBusca = $(this).val().toLowerCase();
+    $('#gastosList li').each(function() {
+      var textoItem = $(this).text().toLowerCase();
+      if (textoItem.indexOf(textoBusca) !== -1) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
   });
 });
