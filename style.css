@@ -1,0 +1,46 @@
+body {
+    padding-top: 70px;
+    
+  }
+  
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+  }
+  
+  
+
+h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.menu-section {
+    height: 70vh;
+    padding-top: 10rem;
+  }
+  
+  .gastos-section {
+    height: 70vh;
+    padding-top: 10rem;
+  }
+  
+  .total-section {
+    height: 100vh;
+    padding-top: 10rem;
+  }
+  
+  .navbar-light .navbar-nav .nav-item:hover {
+    background-color: #e9ecef;
+  }
+  
+  .navbar-light .navbar-nav .nav-item:hover .nav-link {
+    color:black;
+    text-decoration: underline
+  }
+  
+  

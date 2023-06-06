@@ -1,6 +1,16 @@
 $(document).ready(function() {
   var totalGastos = 0; // Variável para armazenar a soma dos gastos
 
+  // Recuperar os dados do localStorage ao carregar a página
+  var gastosSalvos = localStorage.getItem('gastos');
+  if (gastosSalvos) {
+    $('#gastosList').html(gastosSalvos);
+    totalGastos = parseFloat(localStorage.getItem('totalGastos'));
+    var media = parseFloat(localStorage.getItem('media'));
+    $('#totalGastos').text(totalGastos.toFixed(2));
+    $('#mediaTotal').text(media.toFixed(2));
+  }
+
   $('#gastosForm').submit(function(event) {
     event.preventDefault();
 
@@ -13,8 +23,15 @@ $(document).ready(function() {
       return;
     }
 
+    // Verificar o valor dos gastos e exibir os avisos correspondentes
+    if (gastos > 300) {
+      alert('Aviso: Se for uma empresa, é recomendado economizar água, pois o valor médio da conta deve ser em torno de R$ 250,00.');
+    } else if (gastos > 100) {
+      alert('Aviso: Se você mora sozinho, é recomendado economizar mais água, pois o valor médio para uma pessoa deve ser até R$ 85,00.');
+    }
+
     // Adicionar o valor inserido à lista de gastos
-    var gastoItem = '<li class="list-group-item">' + mes + ': R$ ' + gastos.toFixed(2) + ' (conversão em litros: ' + (gastos / 3.5).toFixed(2) + ' litros) <button class="btn btn-link btn-excluir">Excluir</button></li>';
+    var gastoItem = '<li class="list-group-item">' + mes + ': R$ ' + gastos.toFixed(2) + ' <button class="btn btn-link btn-excluir">Excluir</button></li>';
     $('#gastosList').append(gastoItem);
 
     // Somar o valor inserido ao total dos gastos
@@ -28,28 +45,28 @@ $(document).ready(function() {
     $('#totalGastos').text(totalGastos.toFixed(2));
     $('#mediaTotal').text(media.toFixed(2));
 
+    // Atualizar o localStorage com os dados atualizados
+    localStorage.setItem('gastos', $('#gastosList').html());
+    localStorage.setItem('totalGastos', totalGastos);
+    localStorage.setItem('media', media);
+
     // Limpar os campos de entrada de dados
     $('#mes').val('');
     $('#gastos').val('');
   });
 
-  // Adicionar evento de clique aos botões de excluir
-  $(document).on('click', '.btn-excluir', function() {
-    var listItem = $(this).parent();
-    var gastosValue = $(listItem).text().split(':')[1].trim().split(' ')[1];
-
-    // Subtrair o valor excluído do total dos gastos
-    totalGastos -= parseFloat(gastosValue);
-
-    // Calcular a média mensal
-    var numGastos = $('#gastosList li').length;
+  // Adicionar evento de clique aos botões de excluir gasto
+  $('#gastosList').on('click', '.btn-excluir', function() {
+    var gastoItem = $(this).parent();
+    var gastos = parseFloat(gastoItem.text().split(':')[1].trim());
+    totalGastos -= gastos;
+    var numGastos = $('#gastosList li').length - 1;
     var media = totalGastos / numGastos;
-
-    // Atualizar o valor da soma dos gastos e média na página
+    gastoItem.remove();
     $('#totalGastos').text(totalGastos.toFixed(2));
     $('#mediaTotal').text(media.toFixed(2));
-
-    // Remover o item da lista
-    $(listItem).remove();
+    localStorage.setItem('gastos', $('#gastosList').html());
+    localStorage.setItem('totalGastos', totalGastos);
+    localStorage.setItem('media', media);
   });
 });

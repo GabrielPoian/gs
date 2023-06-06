@@ -1,60 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <title>Consulta de Gastos</title>
+  <title>Calculadora de Gastos</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Consulta de Gastos</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">Calculadora de Gastos</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#menu-section">Menu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#gastos-section">Gastos Registrados</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#total-section">Total e Média</a>
+        </li>
       </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" id="search" placeholder="Buscar" aria-label="Buscar">
+      </form>
     </div>
   </nav>
 
-  <div class="container mt-5">
-    <h2>Informe seus gastos mensais em reais</h2>
-    <form id="gastosForm">
-      <div class="form-group">
-        <label for="mes">Mês:</label>
-        <select class="form-control" id="mes">
-          <option value="Janeiro">Janeiro</option>
-          <option value="Fevereiro">Fevereiro</option>
-          <option value="Março">Março</option>
-          <option value="Abril">Abril</option>
-          <option value="Maio">Maio</option>
-          <option value="Junho">Junho</option>
-          <option value="Julho">Julho</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Setembro">Setembro</option>
-          <option value="Outubro">Outubro</option>
-          <option value="Novembro">Novembro</option>
-          <option value="Dezembro">Dezembro</option>
-        </select>
+  <div class="container">
+    <div id="menu-section" class="menu-section">
+      <h1>Registre seus gastos mensais</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <form id="gastosForm">
+            <div class="form-group">
+              <label for="mes">Mês:</label>
+              <select class="form-control" id="mes" required>
+                <option value="">Selecione o mês</option>
+                <option value="Janeiro">Janeiro</option>
+                <option value="Fevereiro">Fevereiro</option>
+                <option value="Março">Março</option>
+                <option value="Abril">Abril</option>
+                <option value="Maio">Maio</option>
+                <option value="Junho">Junho</option>
+                <option value="Julho">Julho</option>
+                <option value="Agosto">Agosto</option>
+                <option value="Setembro">Setembro</option>
+                <option value="Outubro">Outubro</option>
+                <option value="Novembro">Novembro</option>
+                <option value="Dezembro">Dezembro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="gastos">Gastos em Reais:</label>
+              <input type="number" class="form-control" id="gastos" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+          </form>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
       </div>
-      <div class="form-group">
-        <label for="gastos">Gastos (em reais):</label>
-        <input type="number" class="form-control" id="gastos" placeholder="Informe os gastos em reais" required>
-      </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-
-    <div id="gastosSalvos" class="mt-5">
-      <h4>Gastos salvos:</h4>
+    </div>
+    <div id="gastos-section" class="gastos-section">
+      <h1>Gastos Registrados</h1>
       <ul id="gastosList" class="list-group"></ul>
-      <p id="somaGastos">Soma dos gastos: R$ <span id="totalGastos">0,00</span></p>
-      <p id="mediaGastos">Média mensal: R$ <span id="mediaTotal">0,00</span></p>
+    </div>
+    <div id="total-section" class="total-section">
+      <hr>
+      <h1>Dados Totalizados</h1>
+      <div class="form-group">
+        <label>Total de Gastos:</label>
+        <span id="totalGastos" class="badge badge-primary"></span>
+      </div>
+      <div class="form-group">
+        <label>Média Mensal:</label>
+        <span id="mediaTotal" class="badge badge-secondary"></span>
+      </div>
     </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
