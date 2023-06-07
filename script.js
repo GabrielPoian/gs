@@ -23,10 +23,23 @@ $(document).ready(function() {
       return;
     }
 
+    // Verificar se o valor dos gastos é negativo
+    if (gastos < 0) {
+      alert('O valor dos gastos não pode ser negativo.');
+      return;
+    }
+
+    // Verificar se o valor dos gastos excede o limite
+    var limiteGastos = 10000; // Defina o limite desejado aqui
+    if (gastos > limiteGastos) {
+      alert('O valor dos gastos excede o limite permitido.');
+      return;
+    }
+
     // Verificar o valor dos gastos e exibir os avisos correspondentes
     if (gastos > 300) {
       alert('Aviso: Se for uma empresa, é recomendado economizar água, pois o valor médio da conta deve ser em torno de R$ 250,00.');
-    } else if (gastos > 100) {
+    } else if (gastos >= 100) {
       alert('Aviso: Se você mora sozinho, é recomendado economizar mais água, pois o valor médio para uma pessoa deve ser até R$ 85,00 por pessoa.');
     }
 
