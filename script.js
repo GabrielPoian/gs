@@ -39,7 +39,7 @@ $(document).ready(function() {
     // Verificar o valor dos gastos e exibir os avisos correspondentes
     if (gastos > 300) {
       alert('Aviso: Se for uma empresa, é recomendado economizar água, pois o valor médio da conta deve ser em torno de R$ 250,00.');
-    } else if (gastos >= 100) {
+    } else if (gastos > 100) {
       alert('Aviso: Se você mora sozinho, é recomendado economizar mais água, pois o valor médio para uma pessoa deve ser até R$ 85,00 por pessoa.');
     }
 
